@@ -1,0 +1,128 @@
+<div class="card" id="nonprintable">
+    <div class="card-header">
+        <i class="fa fa-align-justify"></i> Filter
+    </div>
+    <div class="card-body">
+        <form [formGroup]="filterForm" #localForm="ngForm" (ngSubmit)="submitForm()">
+            <div [hidden] *ngIf="show14" class="card">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label required" for="select1">Select the mode of transaction</label>
+                        <div class="col-md-9">
+                            <select id="select1" name="select1" class="form-control" formControlName="sel" [class.is-invalid]="(filterForm.get('sel').touched || filterForm.get('sel').dirty) && filterForm.get('sel').invalid">
+                                <option [ngValue]=null>Please select</option>
+                                <option value="1">Cash</option>
+                                <option value="2">Cheque</option>
+                            </select>
+                            <div class="invalid-feedback" *ngIf="(filterForm.get('sel').touched || filterForm.get('sel').dirty) && filterForm.get('sel').errors?.required">
+                                select mode of transaction Required</div>
+                        </div>
+                    </div>
+                    <div align="center">
+                        <button [disabled]="filterForm.invalid" type="submit" class="btn btn-sm btn-primary"><i
+                                class="fa fa-dot-circle-o"></i> Submit</button>
+                        <button type="reset" class="btn btn-sm btn-danger" (click)="resetForm()"><i
+                                class="fa fa-ban"></i> Reset</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div [hidden] *ngIf="show13" align="center">
+            <p style="font-size:23px;">OR</p>
+        </div>
+        <div [hidden] *ngIf="show12" class="card">
+            <form [formGroup]="searchForm" #localForm="ngForm" (ngSubmit)="seaForm()">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label required" for="text-input">Search</label>
+                        <div class="col-md-9">
+                            <input class="form-control" id="date-input" type="text" name="search" (keyup)="search_valid()" placeholder="please enter the item to be searched..." formControlName="search" (formControl)="filterTerm" [class.is-invalid]="(searchForm.get('search').touched || searchForm.get('search').dirty) && searchForm.get('search').invalid">
+                            <div class="invalid-feedback" *ngIf="(searchForm.get('search').touched || searchForm.get('search').dirty) && searchForm.get('search').errors?.required">
+                                Enter the term to search</div>
+
+                        </div>
+                    </div>
+
+                    <div align="center">
+
+                        <button type="reset" class="btn btn-sm btn-danger" (click)="resetForm()"><i
+                                class="fa fa-ban"></i> Reset</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+
+        <div class="card" [hidden] *ngIf="show">
+            <div class="card-body">
+                <div [hidden] *ngIf="totalLength!=0; then m  else y"></div>
+                <ng-template #m>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Receipt No</th>
+                                    <th>Name of Remittance </th>
+                                    <th>Entry Date</th>
+                                    <th>Party Category</th>
+                                    <th>Nature of transmission</th>
+                                    <th>Type of Remittance </th>
+                                    <th>Status</th>
+                                    <th>Total </th>
+                                    <th>Action </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let u of receipt | filter:filterTerm | paginate: { itemsPerPage:5,currentPage:page,totalItems:totalLength }">
+                                    <td>{{u.receiptno}}</td>
+                                    <td>{{u.name}}</td>
+                                    <td>{{u.entrydate | date:'dd-MM-yyyy'}}</td>
+                                    <td *ngIf="u.party===1">Student</td>
+                                    <td *ngIf="u.party===2">Employee</td>
+                                    <td *ngIf="u.party===3">Department</td>
+                                    <td *ngIf="u.nature===1;"><span class="badge badge-success">Cash</span></td>
+                                    <td *ngIf="u.nature===2;"><span class="badge badge-success">Cheque</span></td>
+                                    <td *ngIf="u.type===1">student</td>
+                                    <td *ngIf="u.type===2">Employee</td>
+                                    <td *ngIf="u.type===3">Department</td>
+                                    <td *ngIf="u.status===1;"><span class="badge badge-secondary">Approve</span></td>
+                                    <td *ngIf="u.status===2;"><span class="badge badge-danger">Rejected</span></td>
+                                    <td *ngIf="u.status===3;"><span class="badge badge-secondary">pending</span></td>
+                                    <td>{{u.total}}</td>
+                                    <td><button type="button" class="btn btn-secondary" data-toggle="modal" (click)="largeModal.show()" (click)="show1(u.receiptno)">View</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <pagination-controls (pageChange)="page= $event"></pagination-controls>
+                    </div>
+                </ng-template>
+                <ng-template #y>
+                    <div class="card-body" #y> No data found</div>
+                </ng-template>
+            </div>
+        </div>
+        <div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Receipt</h4>
+                        <button type="button" class="close" (click)="largeModal.hide()" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="container" id="printable">
+                        <div class="watermark">
+                            Duplicate
+                        </div>
+                        <app-modal [receipt]="receipt2" [receipt1]="receipt1"></app-modal>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" (click)="largeModal.hide()">Close</button>
+                        <button type="button" [useExistingCss]="true" class="btn btn-primary" printSectionId="printable" ngxPrint>Print</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

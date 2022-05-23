@@ -1,0 +1,30 @@
+<app-header [navbarBrandRouterLink]="['/dashboard']" [fixed]="true" [sidebarToggler]="'lg'" [asideMenuToggler]="'lg'">
+    <ul class="nav navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+            <a class="nav-link active" (click)="admin.logoutUser()" aria-current="page"><i class="fa fa-lock"></i>
+                Logout</a>
+        </li>
+    </ul>
+</app-header>
+<div class="app-body">
+    <app-sidebar #appSidebar [fixed]="true" [display]="'lg'" [minimized]="sidebarMinimized" (minimizedChange)="toggleMinimize($event)">
+        <app-sidebar-nav [navItems]="navItems" [perfectScrollbar] [disabled]="appSidebar.minimized"></app-sidebar-nav>
+        <app-sidebar-minimizer></app-sidebar-minimizer>
+    </app-sidebar>
+    <main class="main">
+        <cui-breadcrumb>
+            <li class="breadcrumb-menu d-md-down-none">
+                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                    <a class="btn" [routerLink]="['home']"><i class="icon-graph"></i> &nbsp;Dashboard</a>
+                </div>
+            </li>
+        </cui-breadcrumb>
+        <div class="container-fluid">
+            <router-outlet> </router-outlet>
+        </div>
+    </main>
+</div>
+<app-footer>
+    <span><a></a></span>
+    <span class="ml-auto"> <a></a></span>
+</app-footer>

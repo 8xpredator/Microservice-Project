@@ -1,0 +1,36 @@
+<div class="card">
+    <div class="card-header">
+        <i class="fa fa-align-justify"></i> Receipt
+        <div class="card-header-actions">
+            <button [hidden] *ngIf="show" class="btn btn-success" [useExistingCss]="true" printSectionId="printable" ngxPrint>Print</button>
+            <!-- <button class="btn btn-success">Download PDF</button> -->
+        </div>
+        <!-- (click)="openPDF()" -->
+    </div>
+    <!--<div> <button [hidden] *ngIf="show" class="btn btn-success printerContainer" [useExistingCss]="true" printSectionId="printable" ngxPrint><img class="printer" src="assets\img\printer.png"></button>
+    </div> -->
+    <!-- <div> <button (click)="openPDF()">Export To PDF</button></div> -->
+    <!-- <div id="htmlData"> -->
+    <div class="card-body" id="printable" #printable>
+        <div class="container">
+            <app-modal [receipt]="receipt2" [receipt1]="receipt1" [rec2]="rno"></app-modal>
+            <hr id="hr-after">
+            <div class="watermark">
+                Student Copy
+            </div>
+            <app-modal [receipt]="receipt2" [receipt1]="receipt1" [rec2]="rno"></app-modal>
+            <hr id="hr-after">
+            <div class="watermark">
+                Office Copy
+            </div>
+            <app-modal [receipt]="receipt2" [receipt1]="receipt1" [rec2]="rno"></app-modal>
+        </div>
+    </div>
+    <!-- </div> -->
+    <!-- <div>
+        <button (click)="change()" onclick="window.print()">gfg</button>
+    </div> -->
+
+    <!-- <div> <button [hidden] *ngIf="show" (click)="printDiv('printable')" class="btn btn-success printerContainer"><img class="printer" src="assets\img\printer.png"></button>
+    </div> -->
+</div>

@@ -1,0 +1,79 @@
+<div class="card">
+    <div class="card-header">
+        <strong>Add Employee</strong>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="empForm" (ngSubmit)="submitForm()" #localForm="ngForm">
+
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label required" for="text-input">Name</label>
+                <div class="col-md-9">
+                    <input type="text" id="Name" name="Name" formControlName="Name" class="form-control" placeholder="Enter Name" [class.is-invalid]="(empForm.get('Name').touched || empForm.get('Name').dirty) && empForm.get('Name').invalid">
+                    <div class="invalid-feedback" *ngIf="(empForm.get('Name').touched || empForm.get('Name').dirty) && empForm.get('Name').errors?.required">
+                        Name Required</div>
+
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label required" for="text-input">Username</label>
+                <div class="col-md-9">
+                    <input type="text" id="username" name="username" formControlName="username" class="form-control" placeholder="Enter Username" (blur)="check()" [class.is-invalid]="(empForm.get('username').touched || empForm.get('username').dirty) && empForm.get('username').invalid">
+                    <div class="invalid-feedback" *ngIf="(empForm.get('username').touched || empForm.get('username').dirty) && empForm.get('username').errors?.required">
+                        Username Required</div>
+                    <div class="text-danger" style="width: 100%;" *ngIf="length!=0">
+                        Email id Exists </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label required" for="text-input">Password</label>
+                <div class="col-md-9">
+                    <input type="password" id="password" name="password" formControlName="password" class="form-control" placeholder="Enter Password" [class.is-invalid]="(empForm.get('password').touched || empForm.get('password').dirty) && empForm.get('password').invalid">
+                    <div class="invalid-feedback" *ngIf="(empForm.get('password').touched || empForm.get('password').dirty) && empForm.get('password').errors?.required">
+                        password Required</div>
+
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label required" for="text-input">Retype Password</label>
+                <div class="col-md-9">
+                    <input type="password" id="repassword" name="repassword" formControlName="repassword" class="form-control" placeholder="Enter Retype password" (keyup)="captcha_pass()" [class.is-invalid]="(empForm.get('repassword').touched || empForm.get('repassword').dirty) && empForm.get('repassword').invalid">
+                    <div class="invalid-feedback" *ngIf="(empForm.get('repassword').touched || empForm.get('repassword').dirty) && empForm.get('repassword').errors?.required">
+                        Repassword Required</div>
+                    <div class="text-danger" style="width: 100%;" *ngIf="s1">
+                        Password Mismatched </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label required" for="select1">Status</label>
+                <div class="col-md-9">
+                    <select name="status" class="form-control" formControlName="status" [class.is-invalid]="(empForm.get('status').touched || empForm.get('status').dirty) && empForm.get('status').invalid">
+                        <option value="" disabled>Please select</option>
+                        <option value="0">Active</option>
+                        <option value="1">Inactive</option>
+                    </select>
+                    <div class="invalid-feedback" *ngIf="(empForm.get('status').touched || empForm.get('status').dirty) && empForm.get('status').errors?.required">
+                        status Required</div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label required" for="select1">Type</label>
+                <div class="col-md-9">
+                    <select id="select1" name="type" class="form-control" formControlName="type" [class.is-invalid]="(empForm.get('type').touched || empForm.get('type').dirty) && empForm.get('type').invalid">
+                        <option value="" disabled>Please select</option>
+                        <option value="1">Admin</option>
+                        <option value="2">Employee</option>
+                        <option value="3">others</option>
+                    </select>
+                    <div class="invalid-feedback" *ngIf="(empForm.get('type').touched || empForm.get('type').dirty) && empForm.get('type').errors?.required">
+                        Type Required</div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-footer">
+        <button [disabled]="empForm.invalid" type="submit" class="btn btn-sm btn-primary" (click)="submitForm()"><i
+                class="fa fa-dot-circle-o"></i> Submit</button>
+        <button type="reset" class="btn btn-sm btn-danger" (click)="resetForm()"><i class="fa fa-ban"></i>
+            Reset</button>
+    </div>
+</div>

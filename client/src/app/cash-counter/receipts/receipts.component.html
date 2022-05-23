@@ -1,0 +1,223 @@
+<div class="card">
+    <div class="card-header">
+        <strong>Cash Receipts</strong>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="receiptForm" #localForm="ngForm">
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label required" for="text-input">Receipts No</label>
+                <div class="col-md-9">
+                    <input type="number" id="text-input" name="Receiptno" formControlName="Receiptno" class="form-control" placeholder="Enter Receipt No" value=0 readonly [class.is-invalid]="(receiptForm.get('Receiptno').touched || receiptForm.get('Receiptno').dirty) && receiptForm.get('Receiptno').invalid">
+                    <div class="invalid-feedback" *ngIf="(receiptForm.get('Receiptno').touched || receiptForm.get('Receiptno').dirty) && receiptForm.get('Receiptno').errors?.required">Receipt No Required</div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label required" for="date-input">Entry Date</label>
+                <div class="col-md-9">
+                    <input class="form-control" id="date-input" type="text" name="Entrydate" formControlName="Entrydate" placeholder="Enter date" readonly [class.is-invalid]="(receiptForm.get('Entrydate').touched || receiptForm.get('Entrydate').dirty) && receiptForm.get('Entrydate').invalid">
+                    <div class="invalid-feedback" *ngIf="(receiptForm.get('Entrydate').touched || receiptForm.get('Entrydate').dirty) && receiptForm.get('Entrydate').errors?.required">Receipt No Required</div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label required" for="inline-radios">Nature of transaction</label>
+                <div class="col-md-9 col-form-label">
+                    <div class="form-check form-check-inline mr-1" id="inline-radios">
+                        <input class="form-check-input" type="radio" name="Nature" id="inlineRadio1" value="1" (change)="select1()" formControlName="Nature">
+                        <label class="form-check-label" for="inlineRadio1">Cash</label>
+                    </div>
+                    <div class="form-check form-check-inline mr-1">
+                        <input class="form-check-input" type="radio" name="Nature" id="inlineRadio2" value="2" (change)="select()" formControlName="Nature">
+                        <label class="form-check-label" for="inlineRadio2">Cheque</label>
+                    </div>
+                </div>
+            </div>
+            <div [hidden] *ngIf="show" class="card">
+                <div class="card-header">DD Details</div>
+                <div class="card-body">
+                    <form [formGroup]="chequeForm" #localForm="ngForm">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label required" for="text-input">DD No</label>
+                            <div class="col-md-9">
+                                <input type="number" id="text-input" name="DDno" class="form-control" formControlName="DDno" placeholder="Enter DD No" required [class.is-invalid]="(chequeForm.get('DDno').touched || chequeForm.get('DDno').dirty) && chequeForm.get('DDno').invalid">
+                                <!-- <span class="help-block" *ngIf="(!chequeForm.get('DDno').touched)">Please DD number</span> -->
+                                <div class="invalid-feedback" *ngIf="(chequeForm.get('DDno').touched || chequeForm.get('DDno').dirty) && chequeForm.get('DDno').errors?.required">DD No Required</div>
+                                <div class="invalid-feedback" *ngIf="(chequeForm.get('DDno').touched || chequeForm.get('DDno').dirty) && chequeForm.get('DDno').errors?.minlength">Mininmum length is 4</div>
+                                <div class="invalid-feedback" *ngIf="(chequeForm.get('DDno').touched || chequeForm.get('DDno').dirty) && chequeForm.get('DDno').errors?.maxlength">Maximum length is 10</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label required" for="date-input">DD Date</label>
+                            <div class="col-md-9">
+                                <input class="form-control" id="date-input" type="date" name="DDdate" formControlName="DDdate" (blur)="cal()" placeholder="Enter DD date" [class.is-invalid]="(chequeForm.get('DDdate').touched || chequeForm.get('DDdate').dirty) && chequeForm.get('DDdate').invalid">
+                                <!-- <span class="help-block">Please enter a valid date</span> -->
+                                <div class="invalid-feedback" *ngIf="(chequeForm.get('DDdate').touched || chequeForm.get('DDdate').dirty) && chequeForm.get('DDdate').errors?.required">DD date Required</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label required" for="text-input">Name of Bank</label>
+                            <div class="col-md-9">
+                                <input type="text" id="text-input" name="nameofbank" class="form-control" formControlName="nameofbank" placeholder="Enter Name of Bank" required [class.is-invalid]="(chequeForm.get('nameofbank').touched || chequeForm.get('nameofbank').dirty) && chequeForm.get('nameofbank').invalid">
+                                <!-- <span class="help-block" *ngIf="(!chequeForm.get('nameofbank').touched)">Please Enter name of bank</span> -->
+                                <div class="invalid-feedback" *ngIf="(chequeForm.get('nameofbank').touched || chequeForm.get('nameofbank').dirty) && chequeForm.get('nameofbank').errors?.required">Bank Name Required</div>
+                                <div class="invalid-feedback" *ngIf="(chequeForm.get('nameofbank').touched || chequeForm.get('nameofbank').dirty) && chequeForm.get('nameofbank').errors?.pattern">Alphabet only</div>
+                                <div class="invalid-feedback" *ngIf="(chequeForm.get('nameofbank').touched || chequeForm.get('nameofbank').dirty) && chequeForm.get('nameofbank').errors?.minlength">Please provide a name of length greater than 3</div>
+                                <div class="invalid-feedback" *ngIf="(chequeForm.get('nameofbank').touched || chequeForm.get('nameofbank').dirty) && chequeForm.get('nameofbank').errors?.maxlength">Please provide a name of length less than 15</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label required" for="text-input">Branch</label>
+                            <div class="col-md-9">
+                                <input type="text" id="text-input" name="branch" class="form-control" formControlName="branch" placeholder="Enter Branch" required [class.is-invalid]="(chequeForm.get('branch').touched || chequeForm.get('branch').dirty) && chequeForm.get('branch').invalid">
+                                <!-- <span class="help-block" *ngIf="(!chequeForm.get('branch').touched)">Please Enter receipt no</span> -->
+                                <div class="invalid-feedback" *ngIf="(chequeForm.get('branch').touched || chequeForm.get('branch').dirty) && chequeForm.get('branch').errors?.required">Branch Required</div>
+                                <div class="invalid-feedback" *ngIf="(chequeForm.get('branch').touched || chequeForm.get('branch').dirty) && chequeForm.get('branch').errors?.pattern">Alphabet only</div>
+                                <div class="invalid-feedback" *ngIf="(chequeForm.get('branch').touched || chequeForm.get('branch').dirty) && chequeForm.get('branch').errors?.minlength">Please provide branch name of length greater than 3</div>
+                                <div class="invalid-feedback" *ngIf="(chequeForm.get('branch').touched || chequeForm.get('branch').dirty) && chequeForm.get('branch').errors?.minlength">Please provide branch name of length less than 15</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label required" for="text-input">IFSC Code</label>
+                            <div class="col-md-9">
+                                <input type="text" id="text-input" name="branchcode" class="form-control" formControlName="branchcode" placeholder="Enter Branch code" required [class.is-invalid]="(chequeForm.get('branchcode').touched || chequeForm.get('branchcode').dirty) && chequeForm.get('branchcode').invalid">
+                                <!-- <span class="help-block" *ngIf="(!chequeForm.get('branchcode').touched)">Please Enter receipt no</span> -->
+                                <div class="invalid-feedback" *ngIf="(chequeForm.get('branchcode').touched || chequeForm.get('branchcode').dirty) && chequeForm.get('branchcode').errors?.required">Branch Code Required</div>
+                                <div class="invalid-feedback" *ngIf="(chequeForm.get('branchcode').touched || chequeForm.get('branchcode').dirty) && chequeForm.get('branchcode').errors?.minlength">Minimum length is 4</div>
+                                <div class="invalid-feedback" *ngIf="(chequeForm.get('branchcode').touched || chequeForm.get('branchcode').dirty) && chequeForm.get('branchcode').errors?.maxlength">Maximum length is 12</div>
+                                <div class="invalid-feedback" *ngIf="(chequeForm.get('branchcode').touched || chequeForm.get('branchcode').dirty) && chequeForm.get('branchcode').errors?.pattern">Please check IFSC code</div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label required" for="text-input">Remaining Valid Days</label>
+                            <div class="col-md-9">
+                                <input type="number" id="text-input" name="Remainingdate" class="form-control" formControlName="Remainingdate" placeholder="Remaining Date" readonly>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label required" for="select1">Party Category</label>
+                <div class="col-md-9">
+                    <select id="select1" name="select1" class="form-control" formControlName="party" [class.is-invalid]="(receiptForm.get('party').touched || receiptForm.get('party').dirty) && receiptForm.get('party').invalid">
+                        <option value="" disabled>Please select</option>
+                    <option *ngFor="let party of party1; let i=index;"value={{party.id}}>{{party.party_category}}</option>
+                </select>
+                    <div class="invalid-feedback" *ngIf="(receiptForm.get('party').touched || receiptForm.get('party').dirty) && receiptForm.get('party').errors?.required">Party name Required</div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label required" for="text-input">Name of Remitter</label>
+                <div class="col-md-9">
+                    <input type="text" id="text-input" name="nameRemitter" class="form-control" formControlName="nameRemitter" placeholder="Enter Name of Remmitter" required [class.is-invalid]="(receiptForm.get('nameRemitter').touched || receiptForm.get('nameRemitter').dirty) && receiptForm.get('nameRemitter').invalid">
+                    <!-- <span class="help-block" *ngIf="(!receiptForm.get('nameRemitter').touched)">Please Enter Name of Remitter</span> -->
+                    <div class="invalid-feedback" *ngIf="(receiptForm.get('nameRemitter').touched || receiptForm.get('nameRemitter').dirty) && receiptForm.get('nameRemitter').errors?.required">Name of Remmitter Required</div>
+                    <div class="invalid-feedback" *ngIf="receiptForm.get('nameRemitter').errors?.pattern">Alphabet only</div>
+                    <div class="invalid-feedback" *ngIf="receiptForm.get('nameRemitter').errors?.minlength">Please provide a name of length 3</div>
+                    <div class="invalid-feedback" *ngIf="receiptForm.get('nameRemitter').errors?.maxlength">Please provide a name of length less than 30</div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label required" for="textarea-input">Address of Remitter</label>
+                <div class="col-md-9">
+                    <textarea id="textarea-input" name="Address" rows="9" class="form-control" formControlName="Address" placeholder="Content.." [class.is-invalid]="(receiptForm.get('Address').touched || receiptForm.get('Address').dirty) && receiptForm.get('Address').invalid"></textarea>
+                    <!-- <span class="help-block" *ngIf="(!receiptForm.get('Address').touched )">Please Enter Address</span> -->
+                    <div class="invalid-feedback" *ngIf="(receiptForm.get('Address').touched || receiptForm.get('Address').dirty) && receiptForm.get('Address').errors?.required">Address Required</div>
+                    <div class="invalid-feedback" *ngIf="receiptForm.get('Address').errors?.maxlength">Maximum length is 50</div>
+                    <div class="invalid-feedback" *ngIf="receiptForm.get('Address').errors?.minlength">Minimum length is 6</div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label required" for="select1">Type of Remittance</label>
+                <div class="col-md-9">
+                    <select id="select1" name="select1" class="form-control" formControlName="TypeR" required [class.is-invalid]="(receiptForm.get('TypeR').touched || receiptForm.get('TypeR').dirty) && receiptForm.get('TypeR').invalid">
+                        <option value="" disabled>Please select</option>
+                        <option *ngFor="let type of type1; let i=index;" value={{type.id}}>{{type.type_remittance}}</option>
+                </select>
+                    <div class="invalid-feedback" *ngIf="(receiptForm.get('TypeR').touched || receiptForm.get('TypeR').dirty) && receiptForm.get('TypeR').errors?.required"> Type of Remitter Required</div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row ">
+
+                        <div class="col-6 form-group">
+                            <label class="col-form-label required" for="select1">Budget Head</label>
+                            <select id="select1" name="Budgets" class="form-control" formControlName="Budgets" required [class.is-invalid]="(receiptForm.get('Budgets').touched || receiptForm.get('Budgets').dirty) && receiptForm.get('Budgets').invalid">
+                <option value="" disabled>Please select</option>
+                 <option *ngFor="let sub of select2; let i=index;">{{sub.name}}</option>
+               </select>
+                            <div class="invalid-feedback" *ngIf="(receiptForm.get('Budgets').touched || receiptForm.get('Budgets').dirty) && receiptForm.get('Budgets').errors?.required"> Budget head Required</div>
+                        </div>
+                        <div class="col-6 form-group ">
+
+                            <label class="col-form-label required" for="text-input">Amount</label>
+                            <input type="number" min="0" id="text-input" class="form-control" formControlName="Amounts" value=0 (blur)="Tot()" placeholder="Enter Amount " required [class.is-invalid]="(receiptForm.get('Amounts').touched || receiptForm.get('Amounts').dirty) && receiptForm.get('Amounts').invalid">
+
+                            <div class="invalid-feedback" *ngIf="(receiptForm.get('Amounts').touched || receiptForm.get('Amounts').dirty) && receiptForm.get('Amounts').errors?.required">Amount Required</div>
+                        </div>
+
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-primary" style="float:right" (click)="addSkills()"><i class="fa fa-dot-circle-o"></i> Add</button>
+                </div>
+                <div class="card-body" formArrayName="skills" *ngFor="let skill of skills.controls;let i=index">
+                    <div [formGroup]="skill">
+                        <div class="row ">
+
+                            <div class="col-6 form-group">
+                                <label class="col-form-label required" for="select1">Budget Head</label>
+
+                                <select id="select1" class="form-control" formControlName="Budget" required [class.is-invalid]="(skill.get('Budget').touched || skill.get('Budget').dirty) && skill.get('Budget').invalid">
+                    <option value="" disabled>Please select</option>
+                    <option *ngFor="let sub of select2; let i=index;">{{sub.name}}</option>
+                  </select>
+                                <div class="invalid-feedback" *ngIf="(skill.get('Budget').touched || skill.get('Budget').dirty) && skill.get('Budget').errors?.required"> Budget head Required</div>
+                            </div>
+
+                            <div class="col-6 form-group">
+                                <label class="col-form-label required" for="text-input">Amount</label>
+
+                                <input type="number" min="0" id="text-input" class="form-control" formControlName="Amount" (blur)="Tot()" placeholder="Enter Amount" value="0" required [class.is-invalid]="(skill.get('Amount').touched || skill.get('Amount').dirty) && skill.get('Amount').invalid">
+                                <div class="invalid-feedback" *ngIf="(skill.get('Amount').touched || skill.get('Amount').dirty) && skill.get('Amount').errors?.required">Amount Required</div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-primary" style="float:right" (click)="removeSkill(i)"><i class="fa fa-dot-circle-o"></i> Remove</button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label required" for="text-input">Total Amount</label>
+                <div class="col-md-9">
+                    <input type="number" id="text-input" name="Total" class="form-control" formControlName="Total" placeholder="" readonly>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label required" for="textarea-input">Narration</label>
+                <div class="col-md-9">
+                    <textarea id="textarea-input" name="Narration" rows="9" class="form-control" formControlName="Narration" placeholder="Content.." [class.is-invalid]="(receiptForm.get('Narration').touched || receiptForm.get('Narration').dirty) && receiptForm.get('Narration').invalid"></textarea>
+                    <!-- <span class="help-block" *ngIf="(!receiptForm.get('Narration').touched)">Please Enter Narration</span> -->
+                    <div class="invalid-feedback" *ngIf="(receiptForm.get('Narration').touched || receiptForm.get('Narration').dirty) && receiptForm.get('Narration').errors?.required">Narration Required</div>
+                    <div class="invalid-feedback" *ngIf="(receiptForm.get('Narration').touched || receiptForm.get('Narration').dirty) && receiptForm.get('Narration').errors?.minlength">minlength is 5</div>
+                    <div class="invalid-feedback" *ngIf="(receiptForm.get('Narration').touched || receiptForm.get('Narration').dirty) && receiptForm.get('Narration').errors?.maxlength">maxlength is 30</div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label required" for="text-input">Received Amount</label>
+                <div class="col-md-9">
+                    <input type="number" min="0" id="text-input" name="ReceivedAmt" class="form-control" formControlName="ReceivedAmt" (blur)="Rec()" placeholder="Enter Received Amount" [class.is-invalid]="(receiptForm.get('ReceivedAmt').touched || receiptForm.get('ReceivedAmt').dirty) && receiptForm.get('ReceivedAmt').invalid">
+                    <!-- <span class="help-block" *ngIf="(!receiptForm.get('ReceivedAmt').touched)">Please Enter Received Amount</span> -->
+                    <div class="invalid-feedback" *ngIf="(receiptForm.get('ReceivedAmt').touched || receiptForm.get('ReceivedAmt').dirty) && receiptForm.get('ReceivedAmt').errors?.required">Received Amount Required</div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label required" for="text-input">Balance to be given</label>
+                <div class="col-md-9">
+                    <input type="number" min="0" id="text-input" name="Balance" class="form-control" formControlName="Balance" placeholder="" readonly>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-footer">
+        <button [disabled]="receiptForm.invalid" type="submit" class="btn btn-sm btn-primary" (click)="submitForm()"><i class="fa fa-dot-circle-o"></i> Submit</button>
+        <button type="reset" class="btn btn-sm btn-danger" (click)="resetForm()"><i class="fa fa-ban"></i> Reset</button>
+    </div>
+</div>

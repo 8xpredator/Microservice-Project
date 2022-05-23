@@ -1,0 +1,142 @@
+<div class="modal-body" *ngFor="let u of receipt">
+    <div id="printable">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+
+                    <!-- <div class="card-body p-0 ">
+
+                        <div class="row p-5">
+
+                            <div class="col-md-6 text-right">
+                                <p class="font-weight-bold mb-1">Invoice #550</p>
+                                <p class="text-muted">{{u.entrydate | date:'dd-MM-yyyy'}}</p>
+                            </div>
+                        </div>
+
+                        <hr class="my-5">
+
+                        <div class="row pb-5 p-5">
+                            <div class="col-md-6">
+                                <p class="font-weight-bold mb-4">Client Information</p>
+                                <p class="mb-1">{{u.name}}</p>
+                                <p class="mb-1">{{u.address}}</p>
+                                
+                            </div>
+
+                            <div class="col-md-6 text-right">
+                                <p class="font-weight-bold mb-4">Payment Details</p>
+                                <p class="mb-1"><span class="text-muted">Receipt ID: </span> {{u.receiptno}}</p>
+                                <p class="mb-1" *ngIf="u.nature===1;else s"><span class="text-muted">Payment Type: </span> Cash</p>
+                                <p class="mb-1" *ngIf="u.nature===2;"><span class="text-muted">Payment Type: </span> Cheque</p>
+                                <p class="mb-1"><span class="text-muted">Name: </span> SSUS</p>
+                            </div>
+                        </div>
+
+                        <div class="row p-5">
+                            <div class="col-md-12">
+                                <div class="table-responsive-md">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-0 text-uppercase small font-weight-bold">Budget</th>
+                                                <th class="border-0 text-uppercase small font-weight-bold">Amount</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr *ngFor="let z of receipt1">
+                                                <td>{{z.budget}}</td>
+                                                <td>{{z.amount}}</td>
+
+                                               
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="py-3 px-5 text-right">
+                            <div class="mb-2">Total amount</div>
+                            <div class="h2 font-weight-light">₹ {{u.total}}</div>
+                        </div>
+                    </div> -->
+                    <div class="table-responsive">
+                        <table border="1" class="table table-bordered">
+                            <tr style='border-bottom:none;border-top:none' class="noborders">
+                                <td colspan="4">
+                                    <h3 style="text-align:center;">Sree Sankaracharya University of Sanskrit
+                                        <br> University Kalady, Kerala
+                                    </h3>
+                                    <!-- <qrcode [qrdata]="u.receiptno" [width]="100" [errorCorrectionLevel]="'M'"></qrcode> -->
+                                    <ngx-qrcode [elementType]="elementType" [width]="100" [value]="u.receiptno" cssClass="aclass" errorCorrectionLevel="L">
+                                    </ngx-qrcode>
+                                </td>
+
+
+                            </tr>
+                            <tr style="border-collapse: collapse;" class="noborders">
+                                <td style="border-collapse: collapse;">Receipt No:{{u.receiptno}}</td>
+                                <td style="text-align: center;"><b><u>RECEIPT</u></b></td>
+                                <td colspan="2" style="text-align: center;">Date:{{u.entrydate | date:'dd-MM-yyyy'}}
+                                </td>
+
+
+                            </tr>
+                            <tr class="noborders">
+                                <td colspan="4" *ngIf="rec2!=0;">
+                                    old receipt: {{rno}}
+                                    <br>
+                                    <br> Name: {{u.name}}
+                                    <br>
+                                    <br> Address: {{u.address}}
+                                    <br>
+                                    <br>
+                                    <br>
+                                </td>
+                                <td colspan="4" *ngIf="rec2===0;">
+                                    Name: {{u.name}}
+                                    <br>
+                                    <br> Address: {{u.address}}
+                                    <br>
+                                    <br>
+                                    <br>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td>SI.NO</td>
+                                <td colspan="2">Particulars</td>
+                                <td>Amount</td>
+                            </tr>
+                            <tr *ngFor="let z of receipt1; index as i">
+                                <td> {{i+1}}</td>
+                                <td colspan="2">{{z.budget}}</td>
+                                <td>{{z.amount}}</td>
+                            </tr>
+                            <tr>
+                                <td>Cheque/DD no </td>
+                                <td class="noborders">Date: {{u.entrydate | date:'dd-MM-yyyy'}}</td>
+
+                                <td>Total:</td>
+                                <td>₹ {{u.total}}</td>
+                            </tr>
+                            <tr class="noborders">
+                                <td colspan="4"> <br>Recieved amount:{{u.receivedamt}} </td>
+
+                            </tr>
+                            <tr class="noborders">
+                                <td colspan="4" style="text-align: right;"><br>Cashier</td>
+                            </tr>
+
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

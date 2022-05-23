@@ -1,0 +1,21 @@
+table {
+    border-collapse: collapse;
+    margin: 100px auto;
+    width: 80%;
+    border: 1px;
+}
+
+td {
+    margin: 0px;
+    padding: 5px;
+    text-align: left;
+    border: 1px solid #080808;
+}
+
+.border {
+    border: 1px solid #080808;
+}
+
+.noborders td {
+    border: 0;
+}

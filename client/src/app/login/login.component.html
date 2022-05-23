@@ -1,0 +1,86 @@
+<div class="app-body">
+    <main class="main d-flex align-items-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 mx-auto">
+                    <div class="card-group">
+                        <div class="card p-4">
+                            <div class="card-body">
+                                <form [formGroup]="loginForm" (ngSubmit)="submitForm()" #localForm="ngForm">
+                                    <h1>Login</h1>
+                                    <p class="text-muted">Sign In to your account</p>
+                                    <div class="form-group has-feedback">
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="icon-user"></i></span>
+                                            </div>
+                                            <input type="text" class="form-control" formControlName="email" placeholder="Username" autocomplete="username" required [class.is-invalid]="(loginForm.get('email').touched || loginForm.get('email').dirty) && loginForm.get('email').invalid">
+                                            <div class="invalid-feedback" *ngIf="(loginForm.get('email').touched || loginForm.get('email').dirty) && loginForm.get('email').errors?.required">
+                                                Email Required</div>
+                                            <div class="invalid-feedback" *ngIf="loginForm.get('email').errors?.pattern">Please provide a valid email address</div>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group has-feedback">
+                                        <div class="input-group mb-4">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="icon-lock"></i></span>
+                                            </div>
+                                            <input type="password" class="form-control" [type]="fieldTextType ? 'text' : 'password'" formControlName="password" placeholder="Password" autocomplete="current-password" required [class.is-invalid]="(loginForm.get('password').touched || loginForm.get('password').dirty) && loginForm.get('password').invalid">
+                                            <span class="input-group-text"> <i
+                                                class="fa"
+                                                [ngClass]="{
+                                                  'fa-eye-slash': !fieldTextType,
+                                                  'fa-eye': fieldTextType
+                                                }"
+                                                (click)="toggleFieldTextType()"
+                                              ></i></span>
+                                            <div class="invalid-feedback" *ngIf="(loginForm.get('password').touched || loginForm.get('password').dirty) && loginForm.get('password').errors?.required">
+                                                Password Required</div>
+                                            <div class="invalid-feedback" *ngIf="loginForm.get('password').errors?.minlength">Please provide a password of length 6</div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-sm-8 form-group slct">
+
+                                            <input type="text" style="font-weight:bold; font-family:special elite Black; font-size: 20px;text-align:center;" class="form-control" name="Captcha" formControlName="Captcha" id="Captcha" onCopy="return false" onDrag="return false" onPaste="return false"
+                                                autocomplete=off readonly>
+                                        </div>
+                                        <div class="col-sm-4 form-group">
+                                            <button class="refresh" type="button" style="border: none;" id="refresh" (click)="getCaptche()"><img src="assets/img/download.png"
+                                                    height="25" /></button>
+                                        </div>
+                                    </div>
+                                    <div class="form-group has-feedback">
+                                        <div class="input-group mb-4">
+                                            <input class="form-control" formControlName="enteredCaptcha" type="text" id="enteredCaptcha" name="enteredCaptcha" autocomplete="off" placeholder="Enter Capache.." (keyup)="captcha_valid()" [class.is-invalid]="(loginForm.get('enteredCaptcha').touched || loginForm.get('enteredCaptcha').dirty) && loginForm.get('enteredCaptcha').invalid">
+                                            <div class="invalid-feedback" *ngIf="(loginForm.get('enteredCaptcha').touched || loginForm.get('enteredCaptcha').dirty) && loginForm.get('enteredCaptcha').errors?.required">
+                                                Captcha Required</div>
+                                            <div class="text-danger " style="width: 100%;" *ngIf="show">
+                                                Captcha Mismatch</div>
+                                            <div class="text-success" style="width: 100%;" *ngIf="show1">
+                                                Captcha Matched</div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <button [disabled]="loginForm.invalid" type="submit" class="btn btn-primary px-4">Login</button>
+                                        </div>
+                                        <div class="col-6 text-right">
+                                            <button type="button" (click)="btnClick();" class="btn btn-link px-0">Forgot
+                                                password?</button>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

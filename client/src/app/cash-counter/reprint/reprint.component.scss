@@ -1,0 +1,59 @@
+body {
+    background: grey;
+    margin-top: 120px;
+    margin-bottom: 120px;
+}
+
+.printerContainer {
+    margin: 5% 3% 8% 0;
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    padding: 1%;
+    border-radius: 50%;
+    float: right;
+    .printer {
+        width: 70%;
+    }
+}
+
+.printerContainer:hover {
+    transform: scale(1.03);
+}
+
+.printerContainer:active {
+    transform: scale(.98);
+}
+
+.watermark {
+    opacity: 0.5;
+    color: lightgrey;
+    font-size: 80px;
+    transform: rotate(300deg);
+    -webkit-transform: rotate(300deg);
+    position: absolute;
+    margin-top: 432px;
+    margin-left: 165px;
+    z-index: 999;
+}
+
+@media screen and (max-width:768px) {
+    .watermark {
+        text-align: center;
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+@media screen and (min-width:768px) {
+    .watermark {
+        text-align: center;
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+.required:after {
+    content: " *";
+    color: red;
+}

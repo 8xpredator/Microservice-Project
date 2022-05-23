@@ -1,0 +1,59 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server2
+  labels:
+    app: server2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: server2
+  template:
+    metadata:
+      labels:
+        app: server2
+    spec:
+      containers:
+      - name: server2
+        image: 8xpredator/micro-v1:micro_server2 # change this with your docker repository address
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8080
+        env:
+          - name: DB_SCHEMA
+            value: postgres
+          - name: DB_USER
+            value: postgres
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key: postgres-root-password
+          # - name: DB_HOST
+          #   valueFrom:
+          #     configMapKeyRef:
+          #       name: postgres-configmap
+          #       key: database_url
+          - name: DB_DATABASE
+            value: hoaccm
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: server2-service
+spec:
+  selector:
+    app: server2
+  type: LoadBalancer
+  externalIPs:
+  - 192.168.43.22
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+    nodePort: 30002

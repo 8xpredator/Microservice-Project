@@ -1,0 +1,116 @@
+<div class="card" id="nonprintable">
+    <div class="card-header">
+        <i class="fa fa-align-justify"></i> Report
+    </div>
+    <div class="card-body">
+        <div class="card">
+            <form [formGroup]="dateForm" #localForm="ngForm" (ngSubmit)="display2()">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label required" for="text-input">From Date</label>
+                        <div class="col-md-9">
+                            <input class="form-control" id="date-input" type="date" name="Fromdate" formControlName="fromdate" [class.is-invalid]="(dateForm.get('fromdate').touched || dateForm.get('fromdate').dirty) && dateForm.get('fromdate').invalid">
+                            <div class="invalid-feedback" *ngIf="(dateForm.get('fromdate').touched || dateForm.get('fromdate').dirty) && dateForm.get('fromdate').errors?.required">From date Required</div>
+                            <!-- <div class="invalid-feedback" *ngIf="dateForm.errors?.invaineFrom"> Required</div> -->
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label required" for="text-input">To Date</label>
+                        <div class="col-md-9">
+                            <input class="form-control" id="date-input" type="date" name="Todate" formControlName="todate" [class.is-invalid]="(dateForm.get('todate').touched || dateForm.get('todate').dirty) && dateForm.get('todate').invalid ">
+                            <div class="text-danger" *ngIf="(dateForm.get('todate').touched || dateForm.get('todate').dirty) && dateForm.get('todate').errors?.required">To date Required</div>
+                            <div class="text-danger" style="width: 100%;" *ngIf="s1">
+                                To date must be greater than from date </div>
+                        </div>
+                    </div>
+                    <div align="center">
+                        <button [disabled]="dateForm.invalid" type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i> Submit</button>
+                        <button type="reset" class="btn btn-sm btn-danger" (click)="resetForm2()"><i class="fa fa-ban"></i> Reset</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div [hidden] *ngIf="show1">
+            <div [hidden] *ngIf="totalLength!=0; then m  else y"></div>
+            <ng-template #m>
+                <div class="container" id="p1">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body p-0 ">
+                                    <hr class="my-5">
+                                    <div class="row pb-5 p-5">
+                                        <div class="col-md" style="text-align:center ;">
+                                            <p class="font-weight-bold mb-4">Sree Sankaracharya University of Sanskrit</p>
+                                            <p class="mb-1"><span class="text-muted">https://ssus.ac.in/ </span></p>
+                                            <p class="mb-1"><span class="text-muted">Date: {{value}} </span> </p>
+                                        </div>
+                                    </div>
+                                    <div class="row p-5">
+                                        <div class="col-md-12">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Receipt No</th>
+                                                            <th>Entry Date</th>
+                                                            <th>Party Category</th>
+                                                            <th>Nature of transmission</th>
+                                                            <th>Name of Remittance </th>
+                                                            <th>Type of Remittance </th>
+                                                            <th>Status</th>
+                                                            <th>Total </th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                        <tr *ngFor="let u of receipt | paginate: { itemsPerPage:5,currentPage:page,totalItems:totalLength }">
+                                                            <td>{{u.receiptno}}</td>
+                                                            <td>{{u.entrydate| date:'dd-MM-yyyy'}}</td>
+                                                            <td *ngIf="u.party===1">student</td>
+                                                            <td *ngIf="u.party===2">Employee</td>
+                                                            <td *ngIf="u.party===3">Department</td>
+                                                            <td *ngIf="u.nature===1;">Cash</td>
+                                                            <td *ngIf="u.nature===2;">Cheque</td>
+                                                            <td>{{u.name}}</td>
+                                                            <td *ngIf="u.type===1">student</td>
+                                                            <td *ngIf="u.type===2">Employee</td>
+                                                            <td *ngIf="u.type===3">Department</td>
+                                                            <td *ngIf="u.status===1;">Approve</td>
+                                                            <td *ngIf="u.status===2;">Rejected</td>
+                                                            <td *ngIf="u.status===3;">pending</td>
+                                                            <td>{{u.total}}</td>
+
+
+
+
+                                                        </tr>
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="py-3 px-5 text-right">
+                                        <div class="mb-2">Total amount</div>
+                                        <div class="h2 font-weight-light">₹{{sum}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button [hidden] *ngIf="show1" class="btn btn-success printerContainer" [useExistingCss]="true" printSectionId="p1" ngxPrint><img class="printer" src="assets\img\printer.png"></button>
+                </div>
+            </ng-template>
+        </div>
+
+        <ng-template #y>
+            <div class="card-body" #y> No data found</div>
+        </ng-template>
+    </div>
+</div>

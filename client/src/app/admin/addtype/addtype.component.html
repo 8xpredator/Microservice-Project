@@ -1,0 +1,25 @@
+<div class="card">
+    <div class="card-header">
+        <strong>Add Type </strong>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="typeForm" (ngSubmit)="submitForm()" #localForm="ngForm">
+
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label required" for="text-input">Type Name</label>
+                <div class="col-md-9">
+                    <input type="text" id="Name" name="Name" formControlName="Name" class="form-control" placeholder="Enter Name" [class.is-invalid]="(typeForm.get('Name').touched || typeForm.get('Name').dirty) && typeForm.get('Name').invalid">
+                    <div class="invalid-feedback" *ngIf="(typeForm.get('Name').touched || typeForm.get('Name').dirty) && typeForm.get('Name').errors?.required">
+                        Name Required</div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-footer">
+        <button [disabled]="typeForm.invalid" type="submit" class="btn btn-sm btn-primary" (click)="submitForm()"><i
+                class="fa fa-dot-circle-o"></i> Submit</button>
+        <button type="reset" class="btn btn-sm btn-danger" (click)="resetForm()"><i class="fa fa-ban"></i>
+            Reset</button>
+    </div>
+</div>

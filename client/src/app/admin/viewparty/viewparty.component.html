@@ -1,0 +1,38 @@
+<div class="animated fadeIn">
+    <div class="card">
+        <div class="card-header"><i class="fa fa-align-justify"></i> View Party</div>
+        <div class="card-body">
+            <div class="table-responsive-md">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="
+                let u of users
+                  | paginate
+                    : {
+                        itemsPerPage: 2,
+                        currentPage: page,
+                        totalItems: totalLength
+                      }
+              ">
+                            <td>{{ u.id }}</td>
+                            <td>{{ u.party_category }}</td>
+                            <td>
+                                <button class="btn btn-pill btn-light" (click)="select(u.id)">
+                  Edit
+                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <pagination-controls (pageChange)="page = $event"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>

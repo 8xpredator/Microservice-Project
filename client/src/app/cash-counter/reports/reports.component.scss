@@ -1,0 +1,25 @@
+.printerContainer {
+    margin: 5% 3% 8% 0;
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    padding: 1%;
+    border-radius: 50%;
+    float: right;
+    .printer {
+        width: 70%;
+    }
+}
+
+.printerContainer:hover {
+    transform: scale(1.03);
+}
+
+.printerContainer:active {
+    transform: scale(.98);
+}
+
+.required:after {
+    content: " *";
+    color: red;
+}

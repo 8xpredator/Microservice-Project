@@ -1,0 +1,136 @@
+<carousel [interval]="false" [hidden] *ngIf="userid===3">
+    <slide>
+        <img src="assets/img/s1.jpg" alt="First slide" style="display: block; width: 100%;">
+        <div class="carousel-caption d-none d-md-block">
+        </div>
+    </slide>
+    <slide>
+        <img src="assets/img/s3.jpg" alt="Second slide" style="display: block; width: 100%;">
+        <div class="carousel-caption d-none d-md-block">
+        </div>
+    </slide>
+</carousel>
+
+
+<div class="row" [hidden] *ngIf="userid!=3">
+    <div class="col-sm-6 col-lg-3">
+        <div class="card text-white bg-primary">
+            <div class="card-body pb-0">
+                <div class="text-value">
+                    <h1><b>{{approved}}</b></h1>
+                </div>
+                <div><b>Approved Receipt</b></div>
+            </div>
+            <div class="chart-wrapper mt-3 mx-3" style="height:70px;">
+            </div>
+        </div>
+    </div>
+    <!--/.col-->
+    <div class="col-sm-6 col-lg-3">
+        <div class="card text-white bg-warning">
+            <div class="card-body pb-0">
+                <div class="text-value">
+                    <h1><b>{{pending}}</b></h1>
+                </div>
+                <div><b>Pending Receipt</b></div>
+            </div>
+            <div class="chart-wrapper mt-3 mx-3" style="height:70px;">
+            </div>
+        </div>
+    </div>
+    <!--/.col-->
+    <div class="col-sm-6 col-lg-3">
+        <div class="card text-white bg-danger">
+            <div class="card-body pb-0">
+                <div class="text-value">
+                    <h1><b>{{rejected}}</b></h1>
+                </div>
+                <div><b>Rejected Receipt</b></div>
+            </div>
+            <div class="chart-wrapper mt-3 mx-3" style="height:70px;">
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-lg-3">
+        <div class="card text-white bg-danger">
+            <div class="card-body pb-0">
+                <div class="text-value">
+                    <h1><b>{{cancelled}}</b></h1>
+                </div>
+                <div><b>Cancelled Receipt</b></div>
+            </div>
+            <div class="chart-wrapper mt-3 mx-3" style="height:70px;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card" [hidden] *ngIf="userid!=3">
+    <div class="card-header">
+        <i class="fa fa-align-justify"></i> Pending Receipt
+    </div>
+    <div [hidden] *ngIf="totalLength!=0; then m  else y"></div>
+    <ng-template #m>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Receipt No</th>
+                            <th>Name of Remittance </th>
+                            <th>Entry Date</th>
+                            <th>Party Category</th>
+                            <th>Nature of transmission</th>
+                            <th>Type of Remittance </th>
+                            <th>Status</th>
+                            <th>Total </th>
+                            <th>Action </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr *ngFor="let u of receipt | paginate: { itemsPerPage:5,currentPage:page,totalItems:totalLength }">
+                            <td>{{u.receiptno}}</td>
+                            <td>{{u.name}}</td>
+                            <td>{{u.entrydate| date:'dd-MM-yyyy'}}</td>
+                            <td *ngIf="u.party===1;">Student</td>
+                            <td *ngIf="u.party===2;">Employee</td>
+                            <td *ngIf="u.party===3;">Department</td>
+                            <!-- <td>{{u.party}}</td> -->
+                            <td *ngIf="u.nature===1;"><span class="badge badge-success">Cash</span></td>
+                            <td *ngIf="u.nature===2;"><span class="badge badge-success">Cheque</span></td>
+                            <td *ngIf="u.type===1;">Student</td>
+                            <td *ngIf="u.type===2;">Employee</td>
+                            <td *ngIf="u.type===3;">Department</td>
+                            <!-- <td>{{u.type}}</td> -->
+                            <td *ngIf="u.status===3;"><span class="badge badge-secondary">Pending</span></td>
+                            <td>{{u.total}}</td>
+                            <td><button type="button" class="btn btn-secondary" data-toggle="modal" (click)="largeModal.show()" (click)="show(u.receiptno)">View</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <pagination-controls (pageChange)="page= $event"></pagination-controls>
+            </div>
+
+            <div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Receipt Details</h4>
+                            <button type="button" class="close" (click)="largeModal.hide()" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <app-modal [receipt]="receipt2" [receipt1]="receipt1" [rec2]=0></app-modal>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" (click)="largeModal.hide()">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template #y>
+        <div class="card-body" #y> No data found</div>
+    </ng-template>
+</div>

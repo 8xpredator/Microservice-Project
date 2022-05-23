@@ -1,0 +1,109 @@
+<div class="card">
+    <div class="card-header">
+        <i class="fa fa-align-justify"></i> Cancel Receipt
+    </div>
+    <div class="card-body">
+        <div [hidden] *ngIf="totalLength!=0; then m  else y"></div>
+        <ng-template #m>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Receipt No</th>
+                            <th>Name of Remittance </th>
+                            <th>Entry Date</th>
+                            <th>Party Category</th>
+                            <th>Nature of transmission</th>
+                            <th>Type of Remittance </th>
+                            <th>Status </th>
+                            <th>Total </th>
+                            <th>Action </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let u of receipt | paginate: { itemsPerPage:5,currentPage:page,totalItems:totalLength }">
+                            <ng-container *ngIf="u.nature===0; then s1; else s2;"></ng-container>
+                            <ng-template #s1>
+                                <tr>
+                                    <td>{{u.receiptno}}</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td><button type="button" class="btn btn-secondary" data-toggle="modal" (click)="showrec(u.receiptno)">New</button></td>
+                                </tr>
+                            </ng-template>
+                            <ng-template #s2>
+                                <tr>
+                                    <td>{{u.receiptno}}</td>
+                                    <td>{{u.name}}</td>
+                                    <td>{{u.entrydate | date:'dd-MM-yyyy'}}</td>
+                                    <td>{{u.party}}</td>
+                                    <td *ngIf="u.nature===1"><span class="badge badge-success">Cash</span></td>
+                                    <td *ngIf="u.nature===2"><span class="badge badge-success">Cheque</span></td>
+                                    <td *ngIf="u.type===1">student</td>
+                                    <td *ngIf="u.type===2">Faculty</td>
+                                    <td *ngIf="u.type===3">Others</td>
+                                    <td *ngIf="u.status===3"><span class="badge badge-secondary">Pending</span></td>
+                                    <td>{{u.total}}</td>
+                                    <td><button type="button" class="btn btn-secondary" data-toggle="modal" (click)="largeModal.show()" (click)="show22(u.receiptno)">View</button>
+                                        <button [hidden] *ngIf="time1-u.time < 3" type="button" class="btn btn-secondary" data-toggle="modal" (click)="display(u.receiptno)">Delete</button>
+                                    </td>
+                                </tr>
+
+                                <!-- <tr>
+                                <td>{{u.receiptno}}</td>
+                                <td>{{u.name}}</td>
+                                <td *ngIf="u.entrydate==='01-01-2000';else a">-</td>
+                                <td #a>{{u.entrydate | date:'dd-MM-yyyy'}}</td>
+                                <td>{{u.party}}</td>
+                                <td *ngIf="u.nature===1"><span class="badge badge-success">Cash</span></td>
+                                <td *ngIf="u.nature===2"><span class="badge badge-success">Cheque</span></td>
+                                <td *ngIf="u.nature===0">-</td>
+                                <td *ngIf="u.type===1">student</td>
+                                <td *ngIf="u.type===2">Faculty</td>
+                                <td *ngIf="u.type===3">Others</td>
+                                <td *ngIf="u.type===0">-</td>
+                                <td *ngIf="u.status===3"><span class="badge badge-secondary">Pending</span></td>
+                                <td *ngIf="u.status===0">-</td>
+                                <td>{{u.total}}</td>
+                                <td><button [hidden] *ngIf="u.name===0;else g" type="button" class="btn btn-secondary" data-toggle="modal" (click)="largeModal.show()" (click)="show22(u.receiptno)">View</button>
+                                    <button #g *ngIf="u.name!=0;" type="button" class="btn btn-secondary" data-toggle="modal" (click)="largeModal.show()" (click)="show22(u.receiptno)">View</button>
+                                    <button [hidden] *ngIf="u.name===0;else f" type="button" class="btn btn-secondary" data-toggle="modal" (click)="display(u.receiptno)">Delete</button>
+                                    <button #f *ngIf="u.name!=0;" type="button" class="btn btn-secondary" data-toggle="modal" (click)="display(u.receiptno)">Delete</button>
+                                    <button *ngIf="u.name==='0';" type="button" class="btn btn-secondary" data-toggle="modal" (click)="showrec(u.receiptno)">New</button>
+                                </td>
+                            </tr> -->
+                            </ng-template>
+
+
+                        </ng-container>
+                    </tbody>
+                </table>
+                <pagination-controls (pageChange)="page= $event"></pagination-controls>
+            </div>
+        </ng-template>
+        <ng-template #y>
+            <div class="card-body" #y> No data found</div>
+        </ng-template>
+        <div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Receipt Details</h4>
+                        <button type="button" class="close" (click)="largeModal.hide()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                    </div>
+                    <app-modal [receipt]="receipt2" [receipt1]="receipt1"></app-modal>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" (click)="largeModal.hide()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

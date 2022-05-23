@@ -1,0 +1,70 @@
+<div class="card">
+    <div class="card-header">
+        <i class="fa fa-align-justify"></i> Approved Receipt
+    </div>
+    <div [hidden] *ngIf="totalLength!=0; then m  else y"></div>
+    <ng-template #m>
+        <div class="card-body">
+            <div class="form-group">
+                <input type="text" class="form-control" placeholder="Search..." [(ngModel)]="filterTerm">
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Receipt No</th>
+                            <th>Name of Remittance </th>
+                            <th>Entry Date</th>
+                            <th>Party Category</th>
+                            <th>Nature of transmission</th>
+                            <th>Type of Remittance </th>
+                            <th>Status</th>
+                            <th>Total </th>
+                            <th>Action </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr *ngFor="let u of receipt | filter:filterTerm | paginate: { itemsPerPage:5,currentPage:page,totalItems:totalLength }">
+                            <td>{{u.receiptno}}</td>
+                            <td>{{u.name}}</td>
+                            <td>{{u.entrydate | date:'dd-MM-yyyy'}}</td>
+                            <td *ngIf="u.party===1">Student</td>
+                            <td *ngIf="u.party===2">Employee</td>
+                            <td *ngIf="u.party===3">Department</td>
+                            <td *ngIf="u.nature===1;"><span class="badge badge-success">Cash</span></td>
+                            <td *ngIf="u.nature===2;"><span class="badge badge-success">Cheque</span></td>
+                            <td *ngIf="u.type===1">student</td>
+                            <td *ngIf="u.type===2">Employee</td>
+                            <td *ngIf="u.type===3">Department</td>
+                            <td *ngIf="u.status===1;"><span class="badge badge-success">Approved</span></td>
+                            <td>{{u.total}}</td>
+                            <td><button type="button" class="btn btn-secondary" data-toggle="modal" (click)="largeModal.show()" (click)="show(u.receiptno)">View</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <pagination-controls (pageChange)="page= $event"></pagination-controls>
+            </div>
+
+            <div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Receipt Details</h4>
+                            <button type="button" class="close" (click)="largeModal.hide()" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <app-modal [receipt]="receipt2" [receipt1]="receipt1" [rec2]=0></app-modal>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" (click)="largeModal.hide()">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template #y>
+        <div class="card-body" #y> No data found</div>
+    </ng-template>
+</div>

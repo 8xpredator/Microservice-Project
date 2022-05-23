@@ -1,0 +1,83 @@
+<div class="card">
+    <div class="card-header">
+        <strong>Add Group Head</strong>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="addgroupForm" (ngSubmit)="submitForm()" #localForm="ngForm">
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label required" for="select1">Parent Head
+                </label>
+                <div class="col-md-9">
+                    <select class="form-control" formControlName="select1" id="select1" name="select1" [class.is-invalid]="(addgroupForm.get('select1').touched || addgroupForm.get('select1').dirty) && addgroupForm.get('select1').invalid" (change)="changeSuit($event)">
+                        <option selected *ngFor="let sel of select1; ">{{sel.name}}</option>
+                        <option *ngFor="let sub of select; let i=index;">{{sub.name}}</option>
+                    </select>
+                    <div class="invalid-feedback" *ngIf="(addgroupForm.get('select1').touched || addgroupForm.get('select1').dirty) && addgroupForm.get('select1').invalid">
+                        Parent Head Required</div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label required" for="Grouphead">Group Head Account</label>
+                <div class="col-md-9">
+                    <input type="text" formControlName="Grouphead" id="Grouphead" name="Grouphead" class="form-control" placeholder="Enter Group Head Account" />
+                    <div class="invalid-feedback" *ngIf="addgroupForm.get('Grouphead').errors?.required">Group Head Account Required
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label required" for="HeadName">Group Head Name</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control" formControlName="HeadName" placeholder="Enter Group Head name" autocomplete="email" [class.is-invalid]="(addgroupForm.get('HeadName').touched || addgroupForm.get('HeadName').dirty) && addgroupForm.get('HeadName').invalid"
+                    />
+                    <span class="help-block" *ngIf="!addgroupForm.get('HeadName').touched || addgroupForm.get('HeadName').dirty">Please enter
+                        group head
+                        name</span>
+                    <div class="invalid-feedback" *ngIf="(addgroupForm.get('HeadName').touched || addgroupForm.get('HeadName').dirty) && addgroupForm.get('HeadName').errors?.required">
+                        Group Head Name Required</div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label required" for="GheadDesc">Group Head Description</label>
+                <div class="col-md-9">
+                    <textarea id="GheadDesc" name="GheadDesc" rows="9" formControlName="GheadDesc" class="form-control" placeholder="Content.." [class.is-invalid]="(addgroupForm.get('GheadDesc').touched || addgroupForm.get('GheadDesc').dirty) && addgroupForm.get('GheadDesc').invalid"></textarea>
+                    <div class="invalid-feedback" *ngIf="(addgroupForm.get('GheadDesc').touched || addgroupForm.get('GheadDesc').dirty) && addgroupForm.get('GheadDesc').errors?.required">
+                        Group Head Description Required</div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label required" for="inline-radios">Type</label>
+                <div class="col-md-9 col-form-label">
+                    <div class="form-check form-check-inline mr-1" id="inline-radios">
+                        <input class="form-check-input" type="radio" value="1" formControlName="Type" />
+                        <label class="form-check-label" for="inlineRadio1">General</label>
+                    </div>
+                    <div class="form-check form-check-inline mr-1">
+                        <input class="form-check-input" type="radio" value="2" formControlName="Type" />
+                        <label class="form-check-label" for="inlineRadio2">Bank</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label required" for="select1">Section</label>
+                <div class="col-md-9">
+                    <select class="form-control" formControlName="Section" [class.is-invalid]="(addgroupForm.get('Section').touched || addgroupForm.get('Section').dirty) && addgroupForm.get('Section').invalid">
+                        <option value="" disabled>Please select</option>
+                        <option value="1">Finance</option>
+                        <option value="2">Exam Finance</option>
+                        <option value="3">CE Exam Finance</option>
+                    </select>
+                    <div class="invalid-feedback" *ngIf="(addgroupForm.get('Section').touched || addgroupForm.get('Section').dirty) && addgroupForm.get('Section').invalid">
+                        Section Required</div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-footer">
+        <button type="submit" class="btn btn-sm btn-primary" (click)="submitForm()">
+            <i class="fa fa-dot-circle-o"></i> Submit
+        </button>
+        <button type="reset" class="btn btn-sm btn-danger" (click)="resetForm()">
+            <i class="fa fa-ban"></i> Reset
+        </button>
+    </div>
+</div>

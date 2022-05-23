@@ -1,0 +1,49 @@
+<div class="animated fadeIn">
+    <div class="card">
+        <div class="card-header">
+          <i class="fa fa-align-justify"></i> Employee List
+        </div>
+        <div class="card-body">
+          <div class="table-responsive-md">
+            <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let u of users | paginate: { itemsPerPage:2,currentPage:page,totalItems:totalLength }">
+                <td>{{u.id}}</td>
+                <td>{{u.name}}</td>
+                <td>{{u.username}}</td>
+                <td *ngIf="u.type===1;else s" >Admin</td>
+                <td #s *ngIf="u.type===2;else z" >Employee</td>
+                <td #z *ngIf="u.type===3;" >Others</td>
+               
+                <td >
+                  <span class="badge badge-success" *ngIf="u.status===0;else s">Active</span>
+                  <span class="badge badge-secondary" #s *ngIf="u.status===1">Inactive</span>
+                </td>
+                
+                <td><button class="btn btn-pill btn-light" (click)="select(u.id)">Edit</button></td>
+              </tr>
+         </tbody>
+          </table>
+         
+         
+            <pagination-controls (pageChange)="page= $event"></pagination-controls>
+            
+          
+        </div>
+      </div>
+  </div>
+  
+</div>
+
+
+

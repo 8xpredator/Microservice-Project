@@ -1,0 +1,142 @@
+<div class="card" id="nonprintable">
+    <div class="card-header">
+        <i class="fa fa-align-justify"></i> Reprint receipt
+    </div>
+    <div class="card-body">
+        <div [hidden] *ngIf="show3" class="card">
+            <form [formGroup]="recForm" #localForm="ngForm" (ngSubmit)="display1()">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label required" for="text-input">Receipts No</label>
+                        <div class="col-md-9">
+                            <select id="select1" name="select1" class="form-control" formControlName="receiptno" required [class.is-invalid]="(recForm.get('receiptno').touched || recForm.get('receiptno').dirty) && recForm.get('receiptno').invalid">
+                                <option [ngValue]=null>Please select</option>
+                                <option *ngFor="let sel of receipt; ">{{sel.receiptno}}</option>
+                            </select>
+                            <div class="invalid-feedback" *ngIf="(recForm.get('receiptno').touched || recForm.get('receiptno').dirty) && recForm.get('receiptno').errors?.required">
+                                Receipt No Required</div>
+                        </div>
+                    </div>
+                    <div align="center">
+                        <button [disabled]="recForm.invalid" type="submit" class="btn btn-sm btn-primary"><i
+                                class="fa fa-dot-circle-o"></i> Submit</button>
+                        <button type="reset" class="btn btn-sm btn-danger" (click)="resetForm1()"><i
+                                class="fa fa-ban"></i> Reset</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div [hidden] *ngIf="show5" align="center">
+            <p style="font-size:23px;">OR</p>
+        </div>
+        <div [hidden] *ngIf="show2" class="card">
+            <form [formGroup]="dateForm" #localForm="ngForm" (ngSubmit)="display2()">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label required" for="text-input">From Date</label>
+                        <div class="col-md-9">
+                            <input class="form-control" id="date-input" type="date" name="Fromdate" formControlName="fromdate" [class.is-invalid]="(dateForm.get('fromdate').touched || dateForm.get('fromdate').dirty) && dateForm.get('fromdate').invalid">
+                            <span class="help-block" *ngIf="(!dateForm.get('fromdate').touched)">Please Enter from
+                                date</span>
+                            <div class="invalid-feedback" *ngIf="(dateForm.get('fromdate').touched || dateForm.get('fromdate').dirty) && dateForm.get('fromdate').errors?.required">
+                                From date Required</div>
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label required" for="text-input">To Date</label>
+                        <div class="col-md-9">
+                            <input class="form-control" id="date-input" type="date" name="Todate" formControlName="todate" [class.is-invalid]="(dateForm.get('todate').touched || dateForm.get('todate').dirty) && dateForm.get('todate').invalid ">
+                            <span class="help-block" *ngIf="(!dateForm.get('todate').touched)">Please Enter to
+                                date</span>
+                            <div class="invalid-feedback" *ngIf="(dateForm.get('todate').touched || dateForm.get('todate').dirty) && dateForm.get('todate').errors?.required">
+                                To date Required</div>
+                            <div class="text-danger" style="width: 100%;" *ngIf="sz">
+                                To Date must be greater than from date </div>
+
+                        </div>
+                    </div>
+                    <div align="center">
+                        <button [disabled]="dateForm.invalid" type="submit" class="btn btn-sm btn-primary"><i class="fa fa-dot-circle-o"></i>
+                            Submit</button>
+                        <button type="reset" class="btn btn-sm btn-danger" (click)="resetForm2()"><i
+                                class="fa fa-ban"></i> Reset</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div [hidden] *ngIf="show1" class="container" id="p1">
+            <div class="watermark">
+                Duplicate
+            </div>
+            <app-modal [receipt]="receipt2" [receipt1]="receipt1" [rec2]=0></app-modal>
+        </div>
+        <div [hidden] *ngIf="show1">
+            <button [hidden] *ngIf="show" class="btn btn-success printerContainer" [useExistingCss]="true" printSectionId="p1" ngxPrint><img class="printer" src="assets\img\printer.png"></button>
+        </div>
+        <div [hidden] *ngIf="show4">
+            <div [hidden] *ngIf="totalLength!=0; then m  else y"></div>
+            <ng-template #m>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Receipt No</th>
+                                <th>Entry Date</th>
+                                <th>Party Category</th>
+                                <th>Nature of transmission</th>
+                                <th>Name of Remittance </th>
+                                <th>Type of Remittance </th>
+                                <th>Status</th>
+                                <th>Total </th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr *ngFor="let u of receipt3 | paginate: { itemsPerPage:5,currentPage:page,totalItems:totalLength }">
+                                <td>{{u.receiptno}}</td>
+                                <td>{{u.name}}</td>
+                                <td>{{u.entrydate| date:'dd-MM-yyyy'}}</td>
+                                <td>{{u.party}}</td>
+                                <td *ngIf="u.nature===1;"><span class="badge badge-success">Cash</span></td>
+                                <td *ngIf="u.nature===2;"><span class="badge badge-success">Cheque</span></td>
+                                <td *ngIf="u.type===1">student</td>
+                                <td *ngIf="u.type===2">Faculty</td>
+                                <td *ngIf="u.type===3">Others</td>
+                                <td *ngIf="u.status===1;"><span class="badge badge-secondary">Approve</span></td>
+                                <td *ngIf="u.status===2;"><span class="badge badge-danger">Rejected</span></td>
+                                <td *ngIf="u.status===3;"><span class="badge badge-secondary">pending</span></td>
+                                <td>{{u.total}}</td>
+
+                                <td><button type="button" class="btn btn-secondary" data-toggle="modal" (click)="largeModal.show()" (click)="showno(u.receiptno)">View</button></td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                    <pagination-controls (pageChange)="page= $event"></pagination-controls>
+                </div>
+            </ng-template>
+            <ng-template #y>
+                <div class="card-body" #y> No data found</div>
+            </ng-template>
+        </div>
+        <div bsModal #largeModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Receipt Details</h4>
+                        <button type="button" class="close" (click)="largeModal.hide()" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <app-modal [receipt]="receipt2" [receipt1]="receipt1"></app-modal>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" (click)="largeModal.hide()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

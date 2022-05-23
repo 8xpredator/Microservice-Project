@@ -1,0 +1,132 @@
+<div class="animated fadeIn">
+    <div class="card">
+        <div class="card-header"><b>Account Heads</b> </div>
+        <div class="card-body">
+
+            <div class="animated fadeIn">
+                <div class="card">
+                    <div class="card-header">
+                        <b> 100000000000000-Liabilities</b>
+                        <div class="card-header-actions">
+                            <button [hidden] *ngIf="!isCollapsed1" type="button" class="btn btn-pill btn-secondary" (click)="isCollapsed1 = !isCollapsed1">Close
+        </button>
+                            <button [hidden] *ngIf="isCollapsed1" type="button" class="btn btn-pill btn-secondary" (click)="isCollapsed1 = !isCollapsed1">
+                Open
+        </button>
+                        </div>
+                    </div>
+                    <div class="card-body" (collapsed)="collapsed($event)" (expanded)="expanded($event)" [collapse]="isCollapsed1">
+                        <i><a class="nav-link active" aria-current="page"><span class="label label-primary pull-center"><button class="btn btn-pill btn-light" (click)="onSelect(1)">+ Group head</button></span></a></i>
+                        <div *ngFor="let grouphead of grouphead1;let i = index;" [attr.data-index]="i">
+                            <a class="nav-link nav-dropdown-toggle">
+                                <span [hidden] *ngIf="grouphead.lid===0"> <i class="fa fa-folder"></i> {{grouphead.name}}   <i><a class="nav-link active"  aria-current="page"><span class="label label-primary pull-center" ><button class="btn btn-pill btn-light" (click)="onSelect(grouphead)">+ Group head</button><button class="btn btn-pill btn-light" (click)="onSelect1(grouphead)">+ Ledger head</button></span></a>
+                            </i>
+                            </span><span></span><span [hidden] *ngIf="grouphead.gid===0">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-files-o"></i> {{grouphead.name}}  
+        <!--     <a class="nav-link active"  aria-current="page"><i class="label label-primary pull-center"><button class="btn btn-pill btn-light" (click)="onSelect1(grouphead)">+ Ledger head</button></i></a>  -->  
+        
+      
+      </span></a> <span *ngIf="grouphead.gid===3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-folder"></i> {{grouphead.name}} 
+        <a class="nav-link active"  aria-current="page"><i class="label label-primary pull-center"><button class="btn btn-pill btn-light" (click)="onSelect1(grouphead)">+ Ledger head</button></i></a>
+      </span>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="animated fadeIn">
+                <div class="card">
+                    <div class="card-header">
+                        <b>200000000000000-Assets</b>
+                        <div class="card-header-actions">
+                            <button [hidden] *ngIf="!isCollapsed2" type="button" class="btn btn-pill btn-secondary" (click)="isCollapsed2 = !isCollapsed2 ">Close
+        </button>
+                            <button [hidden] *ngIf="isCollapsed2" type="button" class="btn btn-pill btn-secondary" (click)="isCollapsed2 = !isCollapsed2">
+                Open
+        </button>
+                        </div>
+                    </div>
+                    <div class="card-body" (collapsed)="collapsed($event)" (expanded)="expanded($event)" [collapse]="isCollapsed2">
+                        <i><a class="nav-link active" aria-current="page"><span class="label label-primary pull-center"><button class="btn btn-pill btn-light" (click)="onSelect(2)">+ Group head</button></span></a></i>
+                        <div *ngFor="let grouphead of grouphead2;let i = index;" [attr.data-index]="i">
+                            <a class="nav-link nav-dropdown-toggle">
+                                <span [hidden] *ngIf="grouphead.lid===0"> <i class="fa fa-folder"></i> {{grouphead.name}}   <i><a class="nav-link active"  aria-current="page"><span class="label label-primary pull-center"><button class="btn btn-pill btn-light" (click)="onSelect(grouphead)">+ Group head</button><button class="btn btn-pill btn-light" (click)="onSelect1(grouphead)">+ Ledger head</button></span></a>
+                            </i>
+                            </span><span></span><span [hidden] *ngIf="grouphead.gid===0"><i class="fa fa-files-o"></i> {{grouphead.name}}  
+             <!--     <a class="nav-link active"  aria-current="page"><i class="label label-primary pull-center"><button class="btn btn-pill btn-light" (click)="onSelect1(grouphead)">+ Ledger head</button></i></a>  -->  
+        
+      
+      </span></a> <span *ngIf="grouphead.gid===3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-folder"></i> {{grouphead.name}} 
+        <a class="nav-link active"  aria-current="page"><i class="label label-primary pull-center"><button class="btn btn-pill btn-light" (click)="onSelect1(grouphead)">+ Ledger head</button></i></a>
+      </span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="animated fadeIn">
+                <div class="card">
+                    <div class="card-header">
+                        <b>300000000000000-Income</b>
+                        <div class="card-header-actions">
+                            <button [hidden] *ngIf="!isCollapsed3" type="button" class="btn btn-pill btn-secondary" (click)="isCollapsed3 = !isCollapsed3">Close
+        </button>
+                            <button [hidden] *ngIf="isCollapsed3" type="button" class="btn btn-pill btn-secondary" (click)="isCollapsed3 = !isCollapsed3">
+                Open
+        </button>
+                        </div>
+                    </div>
+                    <div class="card-body" (collapsed)="collapsed($event)" (expanded)="expanded($event)" [collapse]="isCollapsed3">
+                        <i><a class="nav-link active"  aria-current="page"><span class="label label-primary pull-center"><button class="btn btn-pill btn-light" (click)="onSelect(3)">+ Group head</button></span></a></i>
+                        <div *ngFor="let grouphead of grouphead3;let i = index;" [attr.data-index]="i">
+                            <a class="nav-link nav-dropdown-toggle">
+                                <span [hidden] *ngIf="grouphead.lid===0"> <i class="fa fa-folder"></i> {{grouphead.name}}   <i><a class="nav-link active" routerLink="addgroup" aria-current="page"><span class="label label-primary pull-center"><button class="btn btn-pill btn-light" (click)="onSelect(grouphead)">+ Group head</button><button class="btn btn-pill btn-light" (click)="onSelect1(grouphead)">+ Ledger head</button></span></a>
+                            </i>
+                            </span><span></span><span [hidden] *ngIf="grouphead.gid===0"><i class="fa fa-files-o"></i> {{grouphead.name}}  
+            <!--     <a class="nav-link active"  aria-current="page"><i class="label label-primary pull-center"><button class="btn btn-pill btn-light" (click)="onSelect1(grouphead)">+ Ledger head</button></i></a>  -->  
+        
+      
+      </span></a> <span *ngIf="grouphead.gid===3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-folder"></i> {{grouphead.name}} 
+        <a class="nav-link active"  aria-current="page"><i class="label label-primary pull-center"><button class="btn btn-pill btn-light" (click)="onSelect1(grouphead)">+ Ledger head</button></i></a>
+      </span>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="animated fadeIn">
+                <div class="card">
+                    <div class="card-header">
+                        <b>400000000000000-Expenditure</b>
+                        <div class="card-header-actions">
+                            <button [hidden] *ngIf="!isCollapsed4" type="button" class="btn btn-pill btn-secondary" (click)="isCollapsed4 = !isCollapsed4">Close
+        </button>
+                            <button [hidden] *ngIf="isCollapsed4" type="button" class="btn btn-pill btn-secondary" (click)="isCollapsed4 = !isCollapsed4">
+                Open
+        </button>
+                        </div>
+                    </div>
+                    <div class="card-body" (collapsed)="collapsed($event)" (expanded)="expanded($event)" [collapse]="isCollapsed4">
+                        <i><a class="nav-link active"  aria-current="page"><span class="label label-primary pull-center"><button class="btn btn-pill btn-light" (click)="onSelect(4)">+ Group head</button></span></a></i>
+                        <div *ngFor="let grouphead of grouphead4;let i = index;" [attr.data-index]="i">
+                            <a class="nav-link nav-dropdown-toggle">
+                                <span [hidden] *ngIf="grouphead.lid===0"> <i class="fa fa-folder"></i> {{grouphead.name}}   <i><a class="nav-link active"  aria-current="page"><span class="label label-primary pull-center" ><button class="btn btn-pill btn-light" (click)="onSelect(grouphead)">+ Group head</button><button class="btn btn-pill btn-light" (click)="onSelect1(grouphead)">+ Ledger head</button></span></a>
+                            </i>
+                            </span><span></span><span [hidden] *ngIf="grouphead.gid===0">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-files-o"></i> {{grouphead.name}}  
+    <!--     <a class="nav-link active"  aria-current="page"><i class="label label-primary pull-center"><button class="btn btn-pill btn-light" (click)="onSelect1(grouphead)">+ Ledger head</button></i></a>  -->  
+    
+  
+  </span></a> <span *ngIf="grouphead.gid===3">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i class="fa fa-folder"></i> {{grouphead.name}} 
+    <a class="nav-link active"  aria-current="page"><i class="label label-primary pull-center"><button class="btn btn-pill btn-light" (click)="onSelect(grouphead)">+ Group head</button><button class="btn btn-pill btn-light" (click)="onSelect1(grouphead)">+ Ledger head</button></i></a>
+  </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

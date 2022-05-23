@@ -1,0 +1,28 @@
+<div class="card">
+    <div class="card-header">
+        <strong>Edit Type</strong>
+    </div>
+    <div class="card-body">
+        <div class="alert alert-danger" role="alert" [hidden] *ngIf="mes1">
+            <a href="#" class="alert-link">Oh snap!</a> Something went wrong.
+        </div>
+        <div class="alert alert-success" role="alert" [hidden] *ngIf="mes2">
+            <a href="#" class="alert-link">Well Done</a> Form Submitted Successfully.
+        </div>
+        <div class="alert alert-danger" role="alert" [hidden] *ngIf="mes3">
+            <a href="#" class="alert-link">Oh snap!</a> Please fill the form.
+        </div>
+        <form [formGroup]="editparty" (ngSubmit)="submitForm()" #localForm="ngForm">
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="text-input">Name</label>
+                <div class="col-md-9">
+                    <input type="text" id="Name" name="Name" class="form-control" formControlName="Name" placeholder="Enter Name">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-footer">
+        <button type="submit" class="btn btn-sm btn-primary" (click)="submitForm()"><i class="fa fa-dot-circle-o"></i> Submit</button>
+        <button type="reset" class="btn btn-sm btn-danger" (click)="resetForm()"><i class="fa fa-ban"></i> Reset</button>
+    </div>
+</div>

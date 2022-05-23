@@ -1,0 +1,32 @@
+.watermark {
+    opacity: 0.5;
+    color: lightgrey;
+    font-size: 80px;
+    transform: rotate(300deg);
+    -webkit-transform: rotate(300deg);
+    position: absolute;
+    margin-top: 432px;
+    margin-left: 165px;
+    z-index: 999;
+}
+
+@media screen and (max-width:768px) {
+    .watermark {
+        text-align: center;
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+@media screen and (min-width:768px) {
+    .watermark {
+        text-align: center;
+        width: 100%;
+        margin-left: 0;
+    }
+}
+
+.required:after {
+    content: " *";
+    color: red;
+}

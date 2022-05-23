@@ -1,0 +1,102 @@
+<div class="card">
+    <div class="card-header">
+        <strong>Add Ledger Head</strong>
+    </div>
+
+    <div class="card-body">
+        <form [formGroup]="addledgerForm" (ngSubmit)="submitForm()" #localForm="ngForm">
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label required" for="select1">Parent Head
+        </label>
+                <div class="col-md-9">
+                    <select class="form-control" formControlName="select1" id="select1" name="select1" [class.is-invalid]="(addledgerForm.get('select1').touched || addledgerForm.get('select1').dirty) && addledgerForm.get('select1').invalid" (change)="changeSuit($event)">
+            <option selected *ngFor="let sel of select1; ">{{sel.name}}</option>
+            <option *ngFor="let sub of select; let i=index;" >{{sub.name}}</option>
+            
+          </select>
+                    <div class="invalid-feedback" *ngIf="(addledgerForm.get('select1').touched || addledgerForm.get('select1').dirty) && addledgerForm.get('select1').invalid">Parent Head Required</div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label required" for="Grouphead">Ledger Head Account</label
+        >
+        <div class="col-md-9">
+          <input
+            type="text"
+            formControlName="Grouphead"
+            id="Grouphead"
+            name="Grouphead" 
+            class="form-control"
+            placeholder="Enter Group Head Account" 
+              />
+          
+ <div class="invalid-feedback" *ngIf="addledgerForm.get('Grouphead').errors?.required" >Group Head Account Required</div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label required" for="HeadName"
+          >Ledger Head Name</label
+        >
+        <div class="col-md-9">
+          <input
+            type="text"
+            class="form-control"
+            formControlName="HeadName"
+            placeholder="Enter Group Head name"
+            autocomplete="email"[class.is-invalid]="(addledgerForm.get('HeadName').touched || addledgerForm.get('HeadName').dirty) && addledgerForm.get('HeadName').invalid" />
+           <span class="help-block" *ngIf="!addledgerForm.get('HeadName').touched || addledgerForm.get('HeadName').dirty">Please enter group head name</span>
+          <div class="invalid-feedback" *ngIf="(addledgerForm.get('HeadName').touched || addledgerForm.get('HeadName').dirty) && addledgerForm.get('HeadName').errors?.required" >Group Head Name Required</div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label required" for="GheadDesc"
+          >Ledger Head Description</label
+        >
+        <div class="col-md-9">
+          <textarea
+            id="GheadDesc"
+            name="GheadDesc"
+            rows="9"
+            formControlName="GheadDesc"
+            class="form-control"
+            placeholder="Content.." [class.is-invalid]="(addledgerForm.get('GheadDesc').touched || addledgerForm.get('GheadDesc').dirty) && addledgerForm.get('GheadDesc').invalid"
+          ></textarea>
+         <div class="invalid-feedback" *ngIf="(addledgerForm.get('GheadDesc').touched || addledgerForm.get('GheadDesc').dirty) && addledgerForm.get('GheadDesc').errors?.required" >Group Head Description Required</div>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-md-3 col-form-label required" for="inline-radios">Type</label>
+                <div class="col-md-9 col-form-label">
+                    <div class="form-check form-check-inline mr-1" id="inline-radios">
+                        <input class="form-check-input" type="radio" value="1" formControlName="Type" />
+                        <label class="form-check-label" for="inlineRadio1">General</label>
+                    </div>
+                    <div class="form-check form-check-inline mr-1">
+                        <input class="form-check-input" type="radio" value="2" formControlName="Type" />
+                        <label class="form-check-label" for="inlineRadio2">Bank</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label required" for="select1">Section</label>
+                <div class="col-md-9">
+                    <select class="form-control" formControlName="Section" [class.is-invalid]="(addledgerForm.get('Section').touched || addledgerForm.get('Section').dirty) && addledgerForm.get('Section').invalid">
+          <option value="" disabled>Please select</option>
+             <option value="1">Finance</option>
+            <option value="2">Exam Finance</option>
+            <option value="3">CE Exam Finance</option>
+          </select>
+                    <div class="invalid-feedback" *ngIf="(addledgerForm.get('Section').touched || addledgerForm.get('Section').dirty) && addledgerForm.get('Section').invalid">Section Required</div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-footer">
+        <button type="submit" class="btn btn-sm btn-primary" (click)="submitForm()">
+      <i class="fa fa-dot-circle-o"></i> Submit
+    </button>
+        <button type="reset" class="btn btn-sm btn-danger" (click)="resetForm()">
+      <i class="fa fa-ban"></i> Reset
+    </button>
+    </div>
+</div>
