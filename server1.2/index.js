@@ -33,8 +33,8 @@ app.post("/forgotpassword", async(req, res) => {
             var transporter = nodemailer.createTransport({
                 service: "gmail",
                 auth: {
-                    user: "007xpredator@gmail.com",
-                    pass: "Ashik001##",
+                    user: "Gmail@gmail.com",
+                    pass: "********",
                 },
                 tls: {
                     rejectUnauthorized: false,
@@ -47,7 +47,7 @@ app.post("/forgotpassword", async(req, res) => {
             password = password + "#";
 
             var mailOptions = {
-                from: "007xpredator@gmail.com",
+                from: "Gmail@gmail.com",
                 to: username,
                 subject: "Forgot password",
                 text: "Your request for forgot password is received.Your password for login is " + password,
